@@ -33,13 +33,13 @@ public class ReactorAPI {
     }
 
     private static void subscribeFlux(String varName, Flux<?> flux){
-        // doOnSubscribe方法会在flux调用subscribe()方法是出发
+        // doOnSubscribe方法会在flux调用subscribe()方法时触发
         flux.doOnSubscribe(s -> System.out.print(varName + ": "))
                 // 对流中的每一个元素都会触发一次doOnNext
                 .doOnNext(e -> System.out.print(e + ", "))
                 // 当流中的所有元素处理完之后
                 .doOnComplete(System.out::println)
-                // 这2个方法打印的内容在subscribe()调用前都不会触发
+                // 这3个方法打印的内容在subscribe()调用前都不会触发
                 // 也就是说在控制台上是看不到这3行代码打印的东西
                 // 当subscribe()方法调用时，会将之前的代码分配给系统一个
                 // 随机的线程执行.
@@ -142,14 +142,14 @@ public class ReactorAPI {
 
     public static void main(String[] args) {
         createFluxFromExistingData();
-        createMonoFromExistingData();
-        createFluxProgrammatically();
-        createMonoAsync();
-        mapVsFlatMap();
-        monoFluxInterchange();
-        useThenForFlow();
-        zipMonoOrFlux();
-        errorHandling();
+//        createMonoFromExistingData();
+//        createFluxProgrammatically();
+//        createMonoAsync();
+//        mapVsFlatMap();
+//        monoFluxInterchange();
+//        useThenForFlow();
+//        zipMonoOrFlux();
+//        errorHandling();
     }
 }
 
