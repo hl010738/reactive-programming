@@ -1,12 +1,15 @@
 package com.spring.reactiveprogramming.domain;
 
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public final class InMemoryDataSource {
     public static final Book[] books = new Book[]{
@@ -35,7 +38,7 @@ public final class InMemoryDataSource {
         return Optional.ofNullable(booksMap.get(isbn));
     }
 
-    public static Collection<Book> findAllBook(){
+    public static Collection<Book> findAllBooks(){
         return booksMap.values();
     }
 
@@ -47,7 +50,25 @@ public final class InMemoryDataSource {
         return Mono.justOrEmpty(findBookById(isbn));
     }
 
-    public static Mono<Book> findBooksQuery(BookQuery bookQuery){
-
+    public static Collection<Book> findBooksQuery(BookQuery bookQuery){
+        return booksMap.values().stream()
+                .filter(book -> {
+                    var matched = true;
+                    if (!StringUtils.isEmpty(bookQuery.getTitle())){
+                        // $=  为 a &=b相当于 a = a&b
+                        matched &= book.getTitle().contains(bookQuery.getTitle());
+                    }
+                    if (bookQuery.getMinPrice() != null){
+                        matched &= (book.getPrice().compareTo(bookQuery.getMinPrice()) >= 0);
+                    }
+                    if (bookQuery.getMaxPrice() != null){
+                        matched &= (book.getPrice().compareTo(bookQuery.getMaxPrice()) >= 0);
+                    }
+                    return matched;
+                })
+                .sorted(Comparator.comparing(Book::getTitle))
+                .skip((bookQuery.getPage() -1) * bookQuery.getSize())
+                .limit(bookQuery.getSize())
+                .collect(Collectors.toList());
     }
 }
