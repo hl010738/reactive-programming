@@ -23,8 +23,15 @@ public class C01AnnotationBased {
        return Flux.fromIterable(InMemoryDataSource.findAllBooks());
     }
 
+    @PostMapping("book")
     public Mono<ResponseEntity<?>> create(@Valid @RequestBody Book book,
+                                          //spring自动注入
+                                          //spring会对@Valid对象调用validator进行自动校验
+                                          //错误信息会封装到BindingResult中
                                           BindingResult bindingResult,
+
+                                          // 用于创建标准的restful uri
+                                          // 包含标准的返回码以及头信息
                                           UriComponentsBuilder ucb)
          throws MethodArgumentNotValidException{
 

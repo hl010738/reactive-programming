@@ -36,11 +36,13 @@ public class C04ReactiveControllerHelper {
         Mono<Tuple2<T, Errors>> validate(T t, Errors errors);
     }
 
+                                      // Validator由spring自动注入
     public static <T> Mono<T> validate(Validator validator,
                                        Mono<T> mono){
         return validate(validator, null, mono);
     }
 
+    // 将校验的结果包装为Mono
     public static <T> Mono<T> validate(Validator validator,
                                        @Nullable ExtraValidator<T> extraValidator,
                                        Mono<T> mono){

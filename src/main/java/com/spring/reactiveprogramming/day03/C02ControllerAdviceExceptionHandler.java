@@ -10,7 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,9 +24,16 @@ import java.util.stream.Collectors;
  *
  * 只有在spring-boot-starter-web被引入的情况下，才有用
  */
+
+// 这个类的作用是一个AOP
+// 用于拦截并处理相应的exception
+// 减少spring系统放出过多的信息
+//只保留需要的错误信息
 @ControllerAdvice
 public class C02ControllerAdviceExceptionHandler {
-    // public class C02ControllerAdviceExceptionHandler extends ResponseEntityExceptionHandler {
+
+// springMVC 的做法就是继承ResponseEntityExceptionHandler
+//public class C02ControllerAdviceExceptionHandler extends ResponseEntityExceptionHandler {
     @RequiredArgsConstructor
     @Data
     public static class InvalidField {
@@ -40,6 +48,9 @@ public class C02ControllerAdviceExceptionHandler {
         private final List<String> errors;
     }
 
+    // 复写ResponseEntityExceptionHandler的方法
+    // 在spring mvc下使用
+//    @Override
 //    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 //                                                                  HttpHeaders httpHeaders,
 //                                                                  HttpStatus httpStatus,
@@ -51,17 +62,21 @@ public class C02ControllerAdviceExceptionHandler {
 //                .map(ObjectError::getDefaultMessage)
 //                .collect(Collectors.toList());
 //        Error error = new Error(invalidFields, errors);
-//        return handleExceptionInternal(ex, error, headers, status, request);
+//        return handleExceptionInternal(ex, error, httpHeaders, httpStatus, request);
 //    }
-//
-//    protected ResponseEntity<Object> handleNotHandlerFoundException(NoHandlerFoundException ex,
+
+
+    // 复写ResponseEntityExceptionHandler的方法
+    // 在spring mvc下使用
+//    @Override
+//    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
 //                                                                    HttpHeaders httpHeaders,
 //                                                                    HttpStatus httpStatus,
 //                                                                    WebRequest request){
 //        Error error = new Error(Collections.emptyList(), Arrays.asList(
 //           String.format("No handler for %s %s", ex.getHttpMethod(), ex.getRequestURL())
 //        ));
-//        return handleExceptionInternal(ex, error, headers, status, request);
+//        return handleExceptionInternal(ex, error, httpHeaders, httpStatus, request);
 //    }
 
 }

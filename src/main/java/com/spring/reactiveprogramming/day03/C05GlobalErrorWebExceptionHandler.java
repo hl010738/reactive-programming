@@ -55,6 +55,7 @@ public class C05GlobalErrorWebExceptionHandler extends
 
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes){
+                                     //对所有的request都处理
         return RouterFunctions.route(RequestPredicates.all(), (serverRequest -> {
             var throwable = errorAttributes.getError(serverRequest);
             if (throwable instanceof ValidationException) {
