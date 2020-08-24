@@ -57,6 +57,8 @@ public class C04ReactiveControllerHelper {
                aMono = extraValidator.validate(t, errors);
            }
             // Ensure there will data flowing in the pipeline
+            // 如果aMono是null将切换到另外的管道
+            // 而不是停止往后执行
            return aMono.switchIfEmpty(Mono.just(Tuples.of(t, errors)));
         }).flatMap(tuple2 -> {
             var errors = tuple2.getT2();
