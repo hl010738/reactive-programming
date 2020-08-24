@@ -55,6 +55,9 @@ public class C03RouterBased {
     }
 
 
+    // 以下代码是不使用任何框架的情况下
+    // 带有重试的save
+    // 以防止网络抖动的情况出现的save异常
     private static final AtomicInteger counter = new AtomicInteger(1);
 
     private Mono<ServerResponse> create(ServerRequest request) {
