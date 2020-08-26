@@ -35,7 +35,9 @@ public class C01BookRepository {
     public Mono<Book> findById(String isbn){
         return databaseClient.execute("select * from book where isbn = :isbn")
                 .bind("isbn", isbn)
+                // 返回的结果封装成Book对象
                 .as(Book.class)
+                // 触发sql
                 .fetch()
                 .one();
     }

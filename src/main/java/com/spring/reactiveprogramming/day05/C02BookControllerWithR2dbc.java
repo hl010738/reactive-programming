@@ -40,7 +40,7 @@ public class C02BookControllerWithR2dbc {
                 .build();
     }
 
-    public Mono<ServerResponse> createMany(ServerRequest request){
+    private Mono<ServerResponse> createMany(ServerRequest request){
         return request.bodyToFlux(Book.class)
                 .flatMap(book -> bookRepository.insert(book))
                 .then(ServerResponse.ok().build())
