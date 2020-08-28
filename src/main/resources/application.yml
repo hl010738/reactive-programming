@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: reactive-programming
+  # Only works with spring-web-mvc
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+  # ??ribbon?ribbon???reactive programming
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
