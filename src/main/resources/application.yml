@@ -12,3 +12,14 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+
+circuitBreaker:
+  default:
+    failureRateThreshold: 30
+    minimumNumberOfCalls: 10
+    slidingWindowSize: 10
+    waitDurationInOpenState: 5S
+    timeoutDuration: 5S
+    cancelRunningFuture: true
+  hello:
+    waitDurationInOpenState: 30S
