@@ -30,6 +30,7 @@ public class C01CloudGateway {
                 //                                 .circuitBreaker(c -> c.setName("gw-fb")
                 //                                         .               setFallbackUri("/fb"))
                 //                 )
+                //                  eurika的地址
                 //                 .uri("lb://demo-client")
                 // )
                 .build();
